@@ -1,6 +1,6 @@
 <h1>
 <p align="center">
-  <img src="https://github.com/risal098/happycert/blob/main/source/android-chrome-192x192.png" alt="Logo" width="128">
+  <img src="https://github.com/risal098/wayspider/blob/main/logo%20way.png" alt="Logo" width="128">
   <br>wayspider
 </h1>
  <p align="center">
