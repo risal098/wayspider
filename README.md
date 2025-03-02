@@ -8,9 +8,9 @@
     <br />
     <a href="#about">About</a>
     ·
-    <a href="#download">Download</a>
+    <a href="#instalation">Instalation</a>
     ·
-    <a href="#terjemahan-bahasa">Tutorial Indonesia</a>
+    <a href="#Documentation">Documentation</a>
     ·
     
   </p>
@@ -18,3 +18,16 @@
 
 ## About
 wayspider is a penetration testing tool that help you to enumerate urls that might contain secret data, url with parameter ,even subdomains, all in one tool
+
+
+
+## Instalations
+
+
+
+## Documentation
+
+
+
+## big thanks
+shoutout to https://github.com/coffinxp as my inspiration also this tool is the modified version of his creation
