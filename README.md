@@ -8,7 +8,7 @@
     <br />
     <a href="#about">About</a>
     ·
-    <a href="#instalation">Instalation</a>
+    <a href="#installation">Installation</a>
     ·
     <a href="#Documentation">Documentation</a>
     ·
@@ -21,7 +21,7 @@ wayspider is a penetration testing tool that help you to enumerate urls that mig
 
 
 
-## Instalations
+## Installation
 
 
 
