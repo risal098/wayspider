@@ -8,7 +8,7 @@
     <br />
     <a href="#about">About</a>
     ·
-    <a href="https://www.mediafire.com/file/4ilnmiq6xrgfr1i/happycert.zip/file">Download</a>
+    <a href="#download">Download</a>
     ·
     <a href="#terjemahan-bahasa">Tutorial Indonesia</a>
     ·
