@@ -1,0 +1,6 @@
+{
+        "url": "*.komdigi.go.id/*",
+        "collapse": "urlkey",
+        "output": "text",
+        "fl": "original"
+}
