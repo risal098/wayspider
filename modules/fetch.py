@@ -1,6 +1,6 @@
 import requests
 import os
-def fetch_website(rawfilename,domain):
+def fetch_website_wayback(rawfilename,domain):
     print("\n\ngetting all the history..")
     url = "https://web.archive.org/cdx/search/cdx"
     os.makedirs(os.path.dirname(rawfilename), exist_ok=True)

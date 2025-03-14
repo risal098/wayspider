@@ -38,11 +38,17 @@ __  _  _______  ___.__. ____________ |__| __| _/___________
                         help='find spesific url that contain the non sensitive expressions, argument must be python tuple like, e.g \'("john-doe","social security","userid","token")\'', dest="exp_non_sens")
     parser.add_argument('-b', '--bypass', type=str,
                         help='bypass 403,404 and any restriction by fetching 200 status on wayback storage')
-
+    parser.add_argument('-m', '--match-bypass', type=str,
+                        help='check if url exist in bypass list also request in internet, and will generate bypass/wayback to check')
+    parser.add_argument('-c', '--check-url', type=str,
+                        help='check if url exist in status list and give code to wayback')           
     args = parser.parse_args()
 
     # target variable to save the program arguments
     domain = args.domain
+    bypass=args.bypass
+    check=args.check_url
+    match_bypass=args.match_bypass
     user_exp_sens = list(ast.literal_eval(args.exp_sens)
                          ) if args.exp_sens else []
     user_exp_non_sens = list(ast.literal_eval(
@@ -71,7 +77,7 @@ __  _  _______  ___.__. ____________ |__| __| _/___________
     if domain:
         keyword_status = statusInsert(
             common_exp_non_sens, common_exp_sens, user_exp_non_sens, user_exp_sens,keyword_status)
-        fetch_website(rawfilename, domain)
+        fetch_website_wayback(rawfilename, domain)
         urlFetcher(rawfilename, urlfilename)
         statusUrlFetcher(rawfilename, statusurlfilename)
         statusBypassFetcher(rawfilename, bypassfilename)
@@ -85,4 +91,10 @@ __  _  _______  ___.__. ____________ |__| __| _/___________
             urlfilename, non_sens_name, non_sens_keyword, keyword_status)
         writeStatusFound(keyword_status )
         showStatus()
+    if bypass:
+    	getUrlFromFile(bypassfilename,bypass)
+    if match_bypass:
+    	matchBypass(bypassfilename,match_bypass)
+    if check:
+    	getUrlFromFile(statusurlfilename ,check)
         
