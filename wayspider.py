@@ -25,7 +25,7 @@ __  _  _______  ___.__. ____________ |__| __| _/___________
               \/\/         \/ |__|           \/    \/            /   \\\033[0m"""
     print(header_text)
     print("ind subdomains,url with params, common lfi and data exposure vulnerability, bypass 403/404 file")
-    print("NO SYSTEM IS SAFE!")
+    print("NO SYSTEM IS SAFE!\n\n")
     parser = argparse.ArgumentParser(
         description="tools to find subdomains,url with params, common lfi and data exposure vulnerability, bypass 403/404 file")
 
