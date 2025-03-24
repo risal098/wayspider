@@ -22,7 +22,7 @@ def fetch_website_wayback(rawfilename, domain):
                 		
                 		if chunk:
                 			file.write(chunk.decode("utf-8"))
-                			data+=0.0008
+                			data+=0.008
         print(f"Content appended to {rawfilename}, total of {data} MB")
     except requests.exceptions.RequestException as e:
         print(f"Error: {e}")
