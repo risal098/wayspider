@@ -221,7 +221,7 @@ def subdomainOnlyFetch(source,url):
 						tempdomain=target[start:index-1]
 						tempdomainset.add(tempdomain)
 						#outfile.write(tempdomain + "\n")
-						print("aw",tempdomain,start,index-1)
+						#print("aw",tempdomain,start,index-1)
 						break				
 		for x in tempdomainset:
 			outfile.write(x + "\n")
@@ -230,7 +230,68 @@ def getSubdomains(source):
 		while (line := file.readline()):
 			target=line.strip()
 			print(target)
+			
+def validatewp(source):
+	with open(source, "r", encoding="utf-8") as file:
+		while (line := file.readline()):
+			target = line.strip()
+			index=target.index(":")
+			raw=target[index:]
+			results=[]
+			try:
+				#http
+				
+				http="http"+raw
+			#	print("1",http)
+				response = requests.get(http,timeout=6)
+				sc=response.status_code
+				data=response.text
+				if sc==200 and data.find('Parent Directory')!=-1 and data.find('52 Mercusuar - Situs Tidak Ditemukan')==-1:
+					#print(http,"[200]",data.find('Parent Directory') ,data.find('52 Mercusuar - Situs Tidak Ditemukan'))
+					results.append(http)
+			except:
+				print("",end="")
+			try:
+				#https
+				
+				https="https"+raw
+			#	print("2",https)
+				responses = requests.get(https,timeout=6)
+				sc=responses.status_code
+				data=responses.text	
+				if sc==200 and data.find('Parent Directory')!=-1 and data.find('52 Mercusuar - Situs Tidak Ditemukan')==-1:
+					#print(https,"[200]",data.find('Parent Directory') ,data.find('52 Mercusuar - Situs Tidak Ditemukan'))	
+					results.append(https)
+			except:
+				print("",end="")
+			if len(results)>0:
+				print(results[-1],"[200]")
 
 
-
+def wpcontentFetch(source, url):
+	with open(source, "r", encoding="utf-8") as file, open(url, "w", encoding="utf-8") as outfile:
+		tempdomainset = set()
+		while (line := file.readline()):
+			target = line.strip()
+			try:
+				index=target.index("wp-content/uploads")
+				wpc=target[:index+len("wp-content/uploads")]
+				tempdomainset.add(wpc)
+			except:
+				continue
+		for x in tempdomainset:
+			outfile.write(x + "\n")
+def wpincludeFetch(source, url):
+	with open(source, "r", encoding="utf-8") as file, open(url, "w", encoding="utf-8") as outfile:
+		tempdomainset = set()
+		while (line := file.readline()):
+			target = line.strip()
+			try:
+				index=target.index("wp-includes")
+				wpc=target[:index+len("wp-includes")]
+				tempdomainset.add(wpc)
+			except:
+				continue
+		for x in tempdomainset:
+			outfile.write(x + "\n")
 	

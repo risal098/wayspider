@@ -43,6 +43,8 @@ __  _  _______  ___.__. ____________ |__| __| _/___________
                         help='show subdomains ')
     parser.add_argument('-l', '--list', type=str,
                         help='get list of domain in txt file')
+    parser.add_argument('--vwp', action="store_true",
+                        help='validate wp content and wp include')                                                
     args = parser.parse_args()
 
     # target variable to save the program arguments
@@ -76,6 +78,8 @@ __  _  _______  ___.__. ____________ |__| __| _/___________
     non_sens_name = "nonsens.txt"
     sens_name = "sens.txt"
     statusfoundfile = "statusFound.json"
+    wpcfile="wpcontent.txt"
+    winfile="wpinclude.txt"
     # keyword status
     keyword_status = {"sens": {}, "nonsens": {}}
 
@@ -89,6 +93,8 @@ __  _  _______  ___.__. ____________ |__| __| _/___________
         non_sens_name = domain+"/"+non_sens_name
         sens_name = domain+"/"+sens_name
         statusfoundfile = domain+"/"+statusfoundfile
+        wpcfile = domain+"/"+wpcfile
+        winfile = domain+"/"+winfile
         keyword_status = statusInsert(
             common_exp_non_sens, common_exp_sens, user_exp_non_sens, user_exp_sens, keyword_status)
         fetch_website_wayback(rawfilename, domain)
@@ -106,6 +112,8 @@ __  _  _______  ___.__. ____________ |__| __| _/___________
         writeStatusFound(statusfoundfile, keyword_status)
         subdomainFetch(urlfilename, subdomainfilename)
         subdomainOnlyFetch(urlfilename, subdomainonlyfilename)
+        wpcontentFetch(urlfilename,wpcfile)
+        wpincludeFetch(urlfilename,winfile)
         showStatus(statusfoundfile)
     if bypass:
         getUrlFromFile(bypassfilename, bypass)
@@ -121,6 +129,9 @@ __  _  _______  ___.__. ____________ |__| __| _/___________
         getSubdomains(subdomainfilename)
     if args.sd:
         getSubdomains(subdomainonlyfilename)
+    if args.vwp:
+    		validatewp(wpcfile)
+    		validatewp(winfile)
     if listfile:
         with open(listfile, "r", encoding="utf-8") as file:
             while (line := file.readline()):
@@ -134,6 +145,8 @@ __  _  _______  ___.__. ____________ |__| __| _/___________
                 non_sens_name = domain+"/"+non_sens_name
                 sens_name = domain+"/"+sens_name
                 statusfoundfile = domain+"/"+statusfoundfile
+                wpcfile = domain+"/"+wpcfile
+                winfile = domain+"/"+winfile
                 keyword_status = statusInsert(
                     common_exp_non_sens, common_exp_sens, user_exp_non_sens, user_exp_sens, keyword_status)
                 fetch_website_wayback(rawfilename, domain)
@@ -151,3 +164,5 @@ __  _  _______  ___.__. ____________ |__| __| _/___________
                 writeStatusFound(statusfoundfile, keyword_status)
                 subdomainFetch(urlfilename, subdomainfilename)
                 subdomainOnlyFetch(urlfilename, subdomainonlyfilename)
+                wpcontentFetch(urlfilename,wpcfile)
+                wpincludeFetch(urlfilename,winfile)
