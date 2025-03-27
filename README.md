@@ -65,5 +65,4 @@ options:
 ```
 
 
-## big thanks
-shoutout to https://github.com/coffinxp as my inspiration also this tool is the modified version of his creation
+
