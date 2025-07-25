@@ -17,6 +17,37 @@ __  _  _______  ___.__. ____________ |__| __| _/___________
     print(header_text)
     print("ind subdomains,url with params, common lfi and data exposure vulnerability, bypass 403/404 file")
     print("NO SYSTEM IS SAFE!\n\n")
+    nasecs_text="""\033[94m@@@@@@@@@@@@@@@@@@@@@@@@@%%@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@%%%%%%@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@%%%%%%%%%@@@@@@@@%%@@@@@@@@@@@@@@@@@
+@@@@@@@@@@%%%%%%%%%%%%%%%@@@@@@@@@%%%%%%%%%@@@@@@@@@@
+@@@@@%%%%%%%%%%%%%%%%%%%%@@@@@@@@%%%%%%%%%%%%%%%@@@@@
+@@@@@%%%%%%%%%%%%%%%%%%%@@@%@@@@%%@@%%%%%%%%%%%@@@@@@
+@@@@@%%%%%%%%%%%%%%%%%%%%##@@@@@@@@%%%%%%%%%%%%@@@@@@
+@@@@@%%%%%%%%%%%%%%%%%%%#+*@@@@@@@%*+**%%%%%%%%@@@@@@
+@@@@@%%%%%%%%*+*%%%%%%%#*+%@@@@@@%*++++*%%%%%%%@@@@@@
+@@@@@%%%%%%%#+++*%%%%%%*+#@@@@@@@#+++++*#%%%%%%@@@@@@
+@@@@@%%%%%%%+++++*%%%%#++%%%%@@@%*+**++*#%%%%%%@@@@@@
+@@@@@@%%%%%*++*++*#%%%+++*#%%@@%*++**++*#%%%%%%@@@@@@
+@@@@@@%%%%#++*#*++*%%*++*#%%@@@#++*##++*#%%%%%@@@@@@@
+@@@@@@%%%%++*#%#++*##+++*#%%@@%*+++**++*#%%%%%@@@@@@@
+@@@@@@@%%*++*#%%*++++++*#%%%@%*++++++++*#%%%%%@@@@@@@
+@@@@@@@%#++*#%%%%#+++++*#%%@@%*+++**#++*#%%%%@@@@@@@@
+@@@@@@@@#**#%%%%%%#**###%%%@%#*++*#%%%++*%%%%@@@@@@@@
+@@@@@@@@%%%%%%%%%%%%%%%%%%%%%#++*#%%%%*+*#%%@@@@@@@@@
+@@@@@@@@@%%%%%%%%%%%%%%%%%%%%#++*#%%%%%**#%@@@@@@@@@@
+@@@@@@@@@@%%%%%%%%%%%%%%%%%%%%#*#%%%%%%%#%%@@@@@@@@@@
+@@@@@@@@@@@%%%%%%%%##%%%%%%%%%%%##%%%%%%%%@@@@@@@@@@@
+@@@@@@@@@@@@%%%%%#+*#+*=**#+**#+###%%%%%@@@@@@@@@@@@@
+@@@@@@@@@@@@@%%%%#++*#*=*#**#*##==+#%%%@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@%%*##+##**###=%%%%*#**%%@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@%##*#%#=####=###%#+*#%@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@%%%%%###%%%##%%%%%@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@%%%%%%%%%%%%%%@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@%%%%%%%%%@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@\033[91mNA\033[94m%%%@@@@@@@@@@@@@@@@@@@@@@@@@\033[0m"""
+
+    #print(nasecs_text)
     parser = argparse.ArgumentParser(
         description="tools to find subdomains,url with params, common lfi and data exposure vulnerability, bypass 403/404 file")
 
@@ -45,6 +76,8 @@ __  _  _______  ___.__. ____________ |__| __| _/___________
                         help='get list of domain in txt file')
     parser.add_argument('--vwp', action="store_true",
                         help='validate wp content and wp include')                                                
+    parser.add_argument('--about', action="store_true",
+                        help='about this tool')
     args = parser.parse_args()
 
     # target variable to save the program arguments
@@ -80,6 +113,7 @@ __  _  _______  ___.__. ____________ |__| __| _/___________
     statusfoundfile = "statusFound.json"
     wpcfile="wpcontent.txt"
     winfile="wpinclude.txt"
+    wpjsonfile="wpjson.txt"
     # keyword status
     keyword_status = {"sens": {}, "nonsens": {}}
 
@@ -95,6 +129,7 @@ __  _  _______  ___.__. ____________ |__| __| _/___________
         statusfoundfile = domain+"/"+statusfoundfile
         wpcfile = domain+"/"+wpcfile
         winfile = domain+"/"+winfile
+        wpjsonfile = domain+"/"+wpjsonfile
         keyword_status = statusInsert(
             common_exp_non_sens, common_exp_sens, user_exp_non_sens, user_exp_sens, keyword_status)
         fetch_website_wayback(rawfilename, domain)
@@ -114,6 +149,7 @@ __  _  _______  ___.__. ____________ |__| __| _/___________
         subdomainOnlyFetch(urlfilename, subdomainonlyfilename)
         wpcontentFetch(urlfilename,wpcfile)
         wpincludeFetch(urlfilename,winfile)
+        wpjsonuser(urlfilename,wpjsonfile)
         showStatus(statusfoundfile)
     if bypass:
         getUrlFromFile(bypassfilename, bypass)
@@ -129,6 +165,8 @@ __  _  _______  ___.__. ____________ |__| __| _/___________
         getSubdomains(subdomainfilename)
     if args.sd:
         getSubdomains(subdomainonlyfilename)
+    if args.about:
+    		print(nasecs_text)
     if args.vwp:
     		validatewp(wpcfile)
     		validatewp(winfile)
@@ -147,6 +185,7 @@ __  _  _______  ___.__. ____________ |__| __| _/___________
                 statusfoundfile = domain+"/"+statusfoundfile
                 wpcfile = domain+"/"+wpcfile
                 winfile = domain+"/"+winfile
+                wpjsonfile = domain+"/"+wpjsonfile
                 keyword_status = statusInsert(
                     common_exp_non_sens, common_exp_sens, user_exp_non_sens, user_exp_sens, keyword_status)
                 fetch_website_wayback(rawfilename, domain)
@@ -166,3 +205,4 @@ __  _  _______  ___.__. ____________ |__| __| _/___________
                 subdomainOnlyFetch(urlfilename, subdomainonlyfilename)
                 wpcontentFetch(urlfilename,wpcfile)
                 wpincludeFetch(urlfilename,winfile)
+                wpjsonuser(urlfilename,wpjsonfile)

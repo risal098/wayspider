@@ -14,12 +14,9 @@ def fetch_website_wayback(rawfilename, domain):
     try:
         with requests.get(url, params=params, stream=True) as response:
             response.raise_for_status()
-            with open(rawfilename, "w", encoding="utf-8") as file:  # Append mode
+            with open(rawfilename, "w", encoding="utf-8") as file:  
             		data = 0.0
             		for chunk in response.iter_content(chunk_size=8192):
-                		#sys.stdout.write(f"\rProcessing {data} KB")  # Overwrites the line
-                		#sys.stdout.flush()
-                		
                 		if chunk:
                 			file.write(chunk.decode("utf-8"))
                 			data+=0.008

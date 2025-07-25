@@ -37,11 +37,13 @@ def statusBypassFetcher(source, filename):
 		while (line := file.readline()):
 			string = line.strip()
 			templist = list(string.split())
-			string = templist[4]+"  "+"https://web.archive.org/web/" + \
-			    templist[1]+"/"+templist[2]
-			# outfile.write(string )
-			if templist[4] == "200":
-				outfile.write(string + "\n")
+			try:
+				string = templist[4]+"  "+"https://web.archive.org/web/" + templist[1]+"/"+templist[2]
+			
+				if templist[4] == "200":
+					outfile.write(string + "\n")
+			except:
+				continue
 
 
 def statusInsert(keyword1, keyword2sens, keyword3, keyword4sens,	keyword_status):
@@ -246,7 +248,7 @@ def validatewp(source):
 				response = requests.get(http,timeout=6)
 				sc=response.status_code
 				data=response.text
-				if sc==200 and data.find('Parent Directory')!=-1 and data.find('52 Mercusuar - Situs Tidak Ditemukan')==-1:
+				if sc==200 and (data.find('Parent Directory')!=-1 or data.find('"name":')!=-1) and data.find('52 Mercusuar - Situs Tidak Ditemukan')==-1:
 					#print(http,"[200]",data.find('Parent Directory') ,data.find('52 Mercusuar - Situs Tidak Ditemukan'))
 					results.append(http)
 			except:
@@ -259,7 +261,7 @@ def validatewp(source):
 				responses = requests.get(https,timeout=6)
 				sc=responses.status_code
 				data=responses.text	
-				if sc==200 and data.find('Parent Directory')!=-1 and data.find('52 Mercusuar - Situs Tidak Ditemukan')==-1:
+				if sc==200 and (data.find('Parent Directory')!=-1 or data.find('"name":')!=-1) and data.find('52 Mercusuar - Situs Tidak Ditemukan')==-1:
 					#print(https,"[200]",data.find('Parent Directory') ,data.find('52 Mercusuar - Situs Tidak Ditemukan'))	
 					results.append(https)
 			except:
@@ -289,6 +291,20 @@ def wpincludeFetch(source, url):
 			try:
 				index=target.index("wp-includes")
 				wpc=target[:index+len("wp-includes")]
+				tempdomainset.add(wpc)
+			except:
+				continue
+		for x in tempdomainset:
+			outfile.write(x + "\n")
+			
+def wpjsonuser(source, url):
+	with open(source, "r", encoding="utf-8") as file, open(url, "w", encoding="utf-8") as outfile:
+		tempdomainset = set()
+		while (line := file.readline()):
+			target = line.strip()
+			try:
+				index=target.index("wp-json/wp/v2/users")
+				wpc=target[:index+len("wp-json/wp/v2/users")]
 				tempdomainset.add(wpc)
 			except:
 				continue
